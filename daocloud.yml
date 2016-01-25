@@ -1,0 +1,4 @@
+image: daocloud.io/library/node:5.4
+
+script:
+    - npm install

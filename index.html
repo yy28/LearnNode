@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>签到API接口测试</title>
+  </head>
+  <body>
+    <h1>签到API接口测试</h1>
+
+    <div>请求: </div>
+    <form id="req" action="">
+      <div>
+        <span>名称：</span>
+        <select id="reqName">
+          <optgroup label="认证类">
+            <option value="AuthLogin">AuthLogin 用户登录</option>
+            <option value="AuthLogout">AuthLogout 用户登出</option>
+          </optgroup>
+        </select>
+      </div>
+      <div>
+        <span>参数：</span>
+        <textarea id="reqParams"  rows="10" cols="60"></textarea>
+        <button>发送请求</button>
+      </div>
+    </form>
+
+    <br/>
+
+    <div>返回: </div>
+    <form id="res" action="">
+      <div>
+        <span>参数：</span>
+        <textarea id="resParams"  rows="10" cols="60"></textarea>
+      </div>
+    </form>
+
+    <br/>
+
+      <div>
+        <span>状态：</span>
+        <input id="status" size="60"></textarea>
+      </div>
+
+<script src="http://cdn.bootcss.com/socket.io/1.4.4/socket.io.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script>
+
+  // 设置选择reqName，就对应reqParams
+  $("#reqName").change(function(){
+    var n = $("#reqName").val();
+
+    // AuthLogin
+    if (n==="AuthLogin") $("#reqParams").val(`
+{
+  "Username": "xxxxx",        // 用户名
+  "Password": "A232F134B1250" // 密码。MD5散列后的HEX字符串
+}
+      `);
+
+    // AuthLogout
+    if (n==="AuthLogout") $("#reqParams").val(`
+{
+  "Token": "xxxxx" // Token令牌
+}
+      `);
+
+  });
+
+
+  // 启动时渲染一次
+  $("#reqName").change();
+
+
+  // 通过 Socket.IO 调用服务器API
+  var api = io.connect('/api/io');
+
+  // 发送请求
+  $('#req').submit(function(){
+    var reqName = $('#reqName').val();
+    var reqParams = $('#reqParams').val();
+
+    api.emit(reqName, reqParams);
+    $('#resParams').val('');
+    $('#status').val("已发送 " + reqName + " 请求");
+    return false;
+  });
+
+  // 接收返回
+  api.on('AuthLogin', function(msg){
+    $('#resParams').val(msg);
+    $('#status').val("已收到 AuthLogin 回应");
+  });
+
+  api.on('AuthLogout', function(msg){
+    $('#resParams').val(msg);
+    $('#status').val("已收到 AuthLogout 回应");
+  });
+
+</script>
+
+  </body>
+</html>
