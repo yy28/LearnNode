@@ -1,10 +1,11 @@
 {
-  "name": "LearnNodeKoa",
-  "version": "0.0.1",
-  "description": "It's to learn Node.js, Koa, koa-socket.",
+  "name": "SigninAppServer",
+  "version": "0.0.2",
+  "description": "Sign in App server.",
   "dependencies": {
     "express": ">=4.13.4",
-    "socket.io": ">=1.4.4"
+    "socket.io": ">=1.4.4",
+    "config": ">=1.19.0"
   },
   "engines": {
     "node": ">=4"

@@ -16,6 +16,22 @@
             <option value="AuthLogin">AuthLogin 用户登录</option>
             <option value="AuthLogout">AuthLogout 用户登出</option>
           </optgroup>
+          <optgroup label="获取信息类">
+              <option value="GetServerStatus">GetServerStatus 获取当前服务器状态</option>
+              <option value="GetAppVersion">GetAppVersion 获取当前APP版本号</option>
+              <option value="GetUserInfo">GetUserInfo 获取个人信息</option>
+              <option value="GetPhoneBook">GetPhoneBook 获取通讯录</option>
+              <option value="GetDepts">GetDepts 获取部门列表</option>
+              <option value="GetDeptPerson">GetDeptPerson 获取部门内人员列表</option>
+              <option value="GetTeams">GetTeams 获取部门下团队列表</option>
+              <option value="GetMyTeams">GetMyTeams 获取本人下属团队</option>
+              <option value="GetMySignin">GetMySignin 获取本人签到历史记录</option>
+              <option value="GetTeamSignin">GetTeamSignin 获取团队内成员签到历史记录</option>
+              <option value="GetTeamSigninToday">GetTeamSigninToday 获取团队内成员今日签到记录</option>
+          </optgroup>
+            <optgroup label="业务操作类">
+                <option value="SignIn">SignIn 签到</option>
+            </optgroup>
         </select>
       </div>
       <div>
@@ -65,7 +81,118 @@
 }
       `);
 
+  // GetServerStatus
+  if (n==="GetServerStatus") $("#reqParams").val(`
+{
+  // 无
+}
+      `);
+
+  // GetAppVersion
+  if (n==="GetAppVersion") $("#reqParams").val(`
+{
+  // 无
+}
+      `);
+
+      // GetUserInfo
+      if (n==="GetUserInfo") $("#reqParams").val(`
+{
+  "Token": "xxxxx" // Token令牌
+}
+      `);
+
+      // GetPhoneBook
+      if (n==="GetPhoneBook") $("#reqParams").val(`
+{
+  "Token": "xxxxx" // Token令牌
+}
+      `);
+
+      // GetDepts
+      if (n==="GetDepts") $("#reqParams").val(`
+{
+  "Token": "xxxxx" // Token令牌
+}
+      `);
+
+      // GetDeptPerson
+      if (n==="GetDeptPerson") $("#reqParams").val(`
+{
+	    "Token"    : "xxxxx", // Token令牌
+	    "DeptCode" : "xxxxx"  // 指定的部门编号
+}
+      `);
+
+      // GetTeams
+      if (n==="GetTeams") $("#reqParams").val(`
+{
+	    "Token"    : "xxxxx", // Token令牌
+	    "DeptCode" : "xxxxx"  // 指定的部门编号
+}
+      `);
+
+      // GetMyTeams
+      if (n==="GetMyTeams") $("#reqParams").val(`
+{
+  "Token": "xxxxx" // Token令牌
+}
+      `);
+
+      // GetMySignin
+      if (n==="GetMySignin") $("#reqParams").val(`
+{
+	    "Token"     : "xxxxx",      // Token令牌
+	    "BeginDate" : "2016-01-01", // 查询开始日期（含）
+	    "EndDate"   : "2016-01-31"  // 查询截止日期（含）
+}
+      `);
+
+      // GetTeamSignin
+      if (n==="GetTeamSignin") $("#reqParams").val(`
+{
+	    "Token"     : "xxxxx",      // Token令牌
+	    "TeamCode"  : "xxxxx",      // 指定团队编号
+	    "BeginDate" : "2016-01-01", // 查询开始日期（含）
+	    "EndDate"   : "2016-01-31"  // 查询截止日期（含）
+}
+      `);
+
+      // GetTeamSigninToday
+      if (n==="GetTeamSigninToday") $("#reqParams").val(`
+{
+	    "Token"     : "xxxxx",      // Token令牌
+	    "TeamCode"  : "xxxxx"       // 指定团队编号
+}
+      `);
+
+      // SignIn
+      if (n==="SignIn") $("#reqParams").val(`
+{
+	    "Token"     : "xxxxx",               // Token令牌
+	    "SignTime"  : "xxxx年x月x日x时x分x秒", // 签到时间
+        "Longitude" : "xxxx",                // 经度
+	    "Latitude"  : "xxxx",                // 纬度
+	    "Address"   :                        // 地址，百度地图查询到的近似位置地址
+	   		{
+	        	"Country"  : "xx", // 国家
+	            "Province" : "xx", // 省份
+	            "City"     : "xx", // 城市
+	            "District" : "xx", // 区
+	            "Street"   : "xx", // 街道
+	            "Door"     : "xx", // 门牌号码
+	            "Building" : "xx"  // 建筑物名称
+	        },
+	    "Memo"      : "xxxxxxx"              // 备注
+}
+      `);
+
+
+
   });
+
+
+
 
 
   // 启动时渲染一次
@@ -96,6 +223,67 @@
     $('#resParams').val(msg);
     $('#status').val("已收到 AuthLogout 回应");
   });
+
+  api.on('GetServerStatus', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetServerStatus 回应");
+  });
+
+  api.on('GetAppVersion', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetAppVersion 回应");
+  });
+
+  api.on('GetUserInfo', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetUserInfo 回应");
+  });
+
+  api.on('GetPhoneBook', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetPhoneBook 回应");
+  });
+
+  api.on('GetDepts', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetDepts 回应");
+  });
+
+  api.on('GetDeptPerson', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetDeptPerson 回应");
+  });
+
+  api.on('GetTeams', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetTeams 回应");
+  });
+
+  api.on('GetMyTeams', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetMyTeams 回应");
+  });
+
+  api.on('GetMySignin', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetMySignin 回应");
+  });
+
+  api.on('GetTeamSignin', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetTeamSignin 回应");
+  });
+
+  api.on('GetTeamSigninToday', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 GetTeamSigninToday 回应");
+  });
+
+  api.on('SignIn', function(msg){
+      $('#resParams').val(msg);
+      $('#status').val("已收到 SignIn 回应");
+  });
+
 
 </script>
 
